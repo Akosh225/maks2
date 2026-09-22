@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Каталог автомобилей — AUTO-VESTA</title>
+  <meta name="description" content="Каталог новых и подержанных автомобилей с фильтром по марке, цене и типу кузова.">
+  <meta property="og:title" content="Каталог автомобилей — AUTO-VESTA">
+  <meta property="og:description" content="Сравнивайте автомобили по цене, марке и характеристикам.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Перейти к содержимому</a>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="logo">AUTO<span>-VESTA</span></a>
+      <nav class="nav" aria-label="Основная навигация">
+        <ul class="nav__list">
+          <li><a href="index.html" class="nav__link">Главная</a></li>
+          <li><a href="catalog.html" class="nav__link">Каталог</a></li>
+          <li><a href="contacts.html" class="nav__link">Оставить заявку</a></li>
+          <li><a href="about.html" class="nav__link">О нас</a></li>
+        </ul>
+      </nav>
+      <button type="button" class="nav-toggle" aria-label="Открыть меню" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <h1>Каталог автомобилей</h1>
+        <p>Выбирайте по марке, бюджету и типу кузова — новые и проверенные автомобили с пробегом.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:16px;">
+      <div class="container">
+        <div class="catalog-layout">
+
+          <!-- ===== ФИЛЬТРЫ ===== -->
+          <aside class="filters" aria-label="Фильтры каталога">
+            <h2>Фильтры</h2>
+
+            <div class="filters__group-title">Состояние</div>
+            <div class="filters__chips" role="group" aria-label="Состояние автомобиля">
+              <button type="button" class="chip" data-filter-condition="all" aria-pressed="true">Все</button>
+              <button type="button" class="chip" data-filter-condition="new" aria-pressed="false">Новые</button>
+              <button type="button" class="chip" data-filter-condition="used" aria-pressed="false">С пробегом</button>
+            </div>
+
+            <div class="field">
+              <label for="filter-brand">Марка</label>
+              <select id="filter-brand" name="brand">
+                <option value="all">Все марки</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="filter-search">Поиск</label>
+              <input type="search" id="filter-search" name="search" placeholder="Марка или модель">
+            </div>
+
+            <div class="field">
+              <label for="filter-body">Тип кузова</label>
+              <select id="filter-body" name="bodyType">
+                <option value="all">Любой</option>
+                <option value="sedan">Седан</option>
+                <option value="suv">Внедорожник</option>
+                <option value="hatchback">Хэтчбек</option>
+              </select>
+            </div>
+
+            <div class="filters__group-title">Цена, ₸</div>
+            <div class="form-row" style="grid-template-columns: 1fr 1fr;">
+              <div class="field">
+                <label for="filter-price-min">От</label>
+                <input type="number" id="filter-price-min" min="0" step="100000" placeholder="0">
+              </div>
+              <div class="field">
+                <label for="filter-price-max">До</label>
+                <input type="number" id="filter-price-max" min="0" step="100000" placeholder="40 000 000">
+              </div>
+            </div>
+
+            <button type="button" id="filter-reset" class="btn btn--outline btn--block" style="margin-top:8px;">
+              Сбросить фильтры
+            </button>
+          </aside>
+
+          <!-- ===== РЕЗУЛЬТАТЫ ===== -->
+          <div>
+            <div class="catalog-toolbar">
+              <span class="results-count" id="results-count"></span>
+              <button type="button" class="btn btn--outline btn--sm" id="compare-open" hidden>Сравнить (<span id="compare-count">0</span>)</button>
+              <label class="sort-control" for="sort-cars">Сортировка
+                <select id="sort-cars">
+                  <option value="default">По умолчанию</option>
+                  <option value="price-asc">Сначала дешевле</option>
+                  <option value="price-desc">Сначала дороже</option>
+                  <option value="year-desc">Сначала новые</option>
+                </select>
+              </label>
+            </div>
+            <div class="car-grid" id="catalog-grid"></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== МОДАЛЬНОЕ ОКНО: БЫСТРЫЙ ПРОСМОТР ===== -->
+  <div class="modal-overlay" id="quick-view-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Быстрый просмотр автомобиля">
+    <div class="modal">
+      <button type="button" class="modal__close" aria-label="Закрыть окно">&times;</button>
+      <div class="modal__media"><img src="" alt=""></div>
+      <div class="modal__body"></div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="compare-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Сравнение автомобилей">
+    <div class="modal modal--wide">
+      <button type="button" class="modal__close" id="compare-close" aria-label="Закрыть сравнение">&times;</button>
+      <div class="modal__body" id="compare-body"></div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <hr class="road-divider">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="index.html" class="logo">AUTO<span>-VESTA</span></a>
+          <p style="margin-top:12px; font-size:0.85rem;">Автосалон новых и подержанных автомобилей в Алматы с 2013 года.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Навигация</h3>
+          <ul>
+            <li><a href="index.html">Главная</a></li>
+            <li><a href="catalog.html">Каталог</a></li>
+            <li><a href="about.html">О нас</a></li>
+            <li><a href="contacts.html">Контакты</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Каталог</h3>
+          <ul>
+            <li><a href="catalog.html?condition=new">Новые авто</a></li>
+            <li><a href="catalog.html?condition=used">С пробегом</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Контакты</h3>
+          <ul>
+            <li>г. Алматы, пр. Достык, 91</li>
+            <li><a href="tel:+77715619741">8 771 561 97 41</a></li>
+            <li>info@auto-vesta.kz</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="footer-year"></span> AUTO-VESTA. Учебный проект.</span>
+        <span>Все автомобили и цены на сайте — демонстрационные данные.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/catalog.js"></script>
+</body>
+</html>

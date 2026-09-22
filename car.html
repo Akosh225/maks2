@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Автомобиль — AUTO-VESTA</title>
+  <meta name="description" content="Подробные характеристики автомобиля, кредитный калькулятор и запись на тест-драйв AUTO-VESTA.">
+  <meta property="og:type" content="product">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Перейти к содержимому</a>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="logo">AUTO<span>-VESTA</span></a>
+      <nav class="nav" aria-label="Основная навигация">
+        <ul class="nav__list">
+          <li><a href="index.html" class="nav__link">Главная</a></li>
+          <li><a href="catalog.html" class="nav__link">Каталог</a></li>
+          <li><a href="contacts.html" class="nav__link">Оставить заявку</a></li>
+          <li><a href="about.html" class="nav__link">О нас</a></li>
+        </ul>
+      </nav>
+      <button type="button" class="nav-toggle" aria-label="Открыть меню" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="section" style="padding-top:32px;">
+      <div class="container">
+
+        <!-- Отрисовывается через JS (car-detail.js) по параметру ?id= -->
+        <div class="car-detail" id="car-detail-root">
+          <p>Загрузка информации об автомобиле…</p>
+        </div>
+
+        <!-- ===== КРЕДИТНЫЙ КАЛЬКУЛЯТОР ===== -->
+        <div class="section-head" style="margin-top:48px;">
+          <h2>Кредитный калькулятор</h2>
+          <p>Рассчитайте примерный ежемесячный платёж. Итоговые условия зависят от банка-партнёра.</p>
+        </div>
+        <form class="calculator" id="calculator-form">
+          <p style="margin-bottom:16px;">
+            Стоимость автомобиля: <strong id="calc-price">—</strong>
+          </p>
+          <div class="form-row" style="grid-template-columns: repeat(3, 1fr);">
+            <div class="field">
+              <label for="calc-down-payment">Первоначальный взнос, %</label>
+              <input type="range" id="calc-down-payment" name="downPayment" min="0" max="70" step="5" value="20">
+              <span class="hint" id="calc-down-payment-value">20%</span>
+            </div>
+            <div class="field">
+              <label for="calc-term">Срок кредита, мес.</label>
+              <select id="calc-term" name="term">
+                <option value="12">12</option>
+                <option value="24">24</option>
+                <option value="36" selected>36</option>
+                <option value="48">48</option>
+                <option value="60">60</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="calc-rate">Ставка, % годовых</label>
+              <input type="number" id="calc-rate" name="rate" min="0" max="40" step="0.5" value="14">
+            </div>
+          </div>
+          <div class="calculator__result">
+            <div>
+              <div class="hint">Ежемесячный платёж</div>
+              <div class="calculator__result-value" id="calc-result-value">—</div>
+            </div>
+            <div class="hint" id="calc-result-principal"></div>
+          </div>
+        </form>
+
+        <!-- ===== ФОРМА ЗАПИСИ НА ТЕСТ-ДРАЙВ ===== -->
+        <div class="section-head" style="margin-top:48px;">
+          <h2>Записаться на тест-драйв</h2>
+          <p>Оставьте контакты — менеджер подтвердит удобное время в течение часа.</p>
+        </div>
+        <form class="booking-form form" id="booking-form" novalidate>
+          <input type="hidden" id="booking-car-name" name="car">
+
+          <div class="form-row" style="grid-template-columns: 1fr 1fr;">
+            <div class="field">
+              <label for="booking-name">Имя</label>
+              <input type="text" id="booking-name" name="name" placeholder="Как к вам обращаться" autocomplete="name">
+              <span class="field__error"></span>
+            </div>
+            <div class="field">
+              <label for="booking-phone">Телефон</label>
+              <input type="tel" id="booking-phone" name="phone" placeholder="+7 (___) ___-__-__" autocomplete="tel">
+              <span class="field__error"></span>
+            </div>
+          </div>
+
+          <div class="form-row" style="grid-template-columns: 1fr 1fr;">
+            <div class="field">
+              <label for="booking-email">Email</label>
+              <input type="email" id="booking-email" name="email" placeholder="name@example.com" autocomplete="email">
+              <span class="field__error"></span>
+            </div>
+            <div class="field">
+              <label for="booking-date">Удобная дата</label>
+              <input type="date" id="booking-date" name="date">
+              <span class="field__error"></span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="booking-comment">Комментарий (необязательно)</label>
+            <textarea id="booking-comment" name="comment" placeholder="Например: удобнее после 18:00"></textarea>
+          </div>
+
+          <div class="form-status" role="status"></div>
+
+          <button type="submit" class="btn btn--primary">Записаться на тест-драйв</button>
+        </form>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <hr class="road-divider">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="index.html" class="logo">AUTO<span>-VESTA</span></a>
+          <p style="margin-top:12px; font-size:0.85rem;">Автосалон новых и подержанных автомобилей в Алматы с 2013 года.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Навигация</h3>
+          <ul>
+            <li><a href="index.html">Главная</a></li>
+            <li><a href="catalog.html">Каталог</a></li>
+            <li><a href="about.html">О нас</a></li>
+            <li><a href="contacts.html">Контакты</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Каталог</h3>
+          <ul>
+            <li><a href="catalog.html?condition=new">Новые авто</a></li>
+            <li><a href="catalog.html?condition=used">С пробегом</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Контакты</h3>
+          <ul>
+            <li>г. Алматы, пр. Достык, 91</li>
+            <li><a href="tel:+77715619741">8 771 561 97 41</a></li>
+            <li>info@auto-vesta.kz</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="footer-year"></span> AUTO-VESTA. Учебный проект.</span>
+        <span>Все автомобили и цены на сайте — демонстрационные данные.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/car-detail.js"></script>
+  <script>
+    // Небольшой инлайн-хелпер: обновляет подпись ползунка первоначального
+    // взноса в реальном времени. Вынесен сюда, а не в отдельный файл,
+    // т.к. это одна строка логики, специфичная только для этой страницы.
+    document.addEventListener("DOMContentLoaded", () => {
+      const range = document.getElementById("calc-down-payment");
+      const label = document.getElementById("calc-down-payment-value");
+      if (range && label) {
+        range.addEventListener("input", () => (label.textContent = range.value + "%"));
+      }
+    });
+  </script>
+</body>
+</html>
